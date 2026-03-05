@@ -25,11 +25,25 @@ Check if `@laststance/tailwind-suggest-canonical-classes` is in `package.json` d
 bun add -D @laststance/tailwind-suggest-canonical-classes
 ```
 
-### Step 2: Detect CSS entry point
+### Step 2: Add convenience script to package.json
+
+Check the project's `package.json` for an existing `fix-tailwind` script. If not present, add it so the user can easily re-run the fix later:
+
+```bash
+npm pkg set scripts.fix-tailwind='tailwind-suggest-canonical-classes "src/**/*.{tsx,ts,jsx,js}" --css ./src/app/globals.css'
+```
+
+This allows the user to re-run the fix anytime with:
+
+```bash
+bun run fix-tailwind
+```
+
+### Step 3: Detect CSS entry point
 
 The CSS entry point is `src/app/globals.css` (standard across admin, front, tool projects). Verify the file exists before proceeding.
 
-### Step 3: Dry run (preview changes)
+### Step 4: Dry run (preview changes)
 
 Run a check-only pass to show what would change without modifying files:
 
@@ -39,7 +53,7 @@ bunx tailwind-suggest-canonical-classes "src/**/*.{tsx,jsx,ts}" --css ./src/app/
 
 Show the user a summary of what will be changed. If no changes are found, inform the user and stop.
 
-### Step 4: Apply fixes
+### Step 5: Apply fixes
 
 After showing the dry run results, apply the fixes:
 
@@ -47,7 +61,7 @@ After showing the dry run results, apply the fixes:
 bunx tailwind-suggest-canonical-classes "src/**/*.{tsx,jsx,ts}" --css ./src/app/globals.css --verbose
 ```
 
-### Step 5: Format changed files
+### Step 6: Format changed files
 
 Run prettier on the modified files to ensure consistent formatting:
 
@@ -55,7 +69,7 @@ Run prettier on the modified files to ensure consistent formatting:
 bunx prettier --write "src/**/*.{tsx,jsx,ts}"
 ```
 
-### Step 6: Show summary
+### Step 7: Show summary
 
 Run `git diff --stat` to show the user a summary of all changed files. Optionally show a few example diffs with `git diff` on specific files to illustrate the transformations.
 
@@ -63,7 +77,7 @@ Run `git diff --stat` to show the user a summary of all changed files. Optionall
 
 - **Target specific directory**: Replace `"src/**/*.{tsx,jsx,ts}"` with a specific path like `"src/components/staff-chat/**/*.tsx"`
 - **Root font size**: Add `--root-font-size 16` if your project uses a non-default root font size
-- **Dry run only**: If the user only wants to see what would change, stop after Step 3
+- **Dry run only**: If the user only wants to see what would change, stop after Step 4
 
 ## Notes
 
