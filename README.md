@@ -42,11 +42,18 @@ In Claude Code, trigger the skill by saying:
 The skill will:
 
 1. Install the CLI tool if needed
-2. Detect your CSS entry point (`src/app/globals.css`)
-3. Run a dry-run to preview all changes
-4. Apply fixes across all `.tsx`, `.jsx`, and `.ts` files
-5. Run Prettier to maintain formatting
-6. Show a `git diff --stat` summary
+2. Add a `fix-tailwind` script to your `package.json` for easy reuse
+3. Detect your CSS entry point (`src/app/globals.css`)
+4. Run a dry-run to preview all changes
+5. Apply fixes across all `.tsx`, `.jsx`, and `.ts` files
+6. Run Prettier to maintain formatting
+7. Show a `git diff --stat` summary
+
+After the first run, you can re-run the fix anytime without Claude Code:
+
+```bash
+bun run fix-tailwind
+```
 
 ### Options
 
